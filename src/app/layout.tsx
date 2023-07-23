@@ -1,9 +1,5 @@
-"use client"
-
-import { QueryClientProvider, QueryClient } from 'react-query'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,13 +15,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [queryClient] = useState(() => new QueryClient());
+ 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryClientProvider client={queryClient}>
         {children}
-        </QueryClientProvider>
+      
         </body>
     </html>
   )

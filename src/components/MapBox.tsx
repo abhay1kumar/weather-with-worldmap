@@ -1,4 +1,4 @@
-// src/components/Map.tsx
+"use client"
 
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
