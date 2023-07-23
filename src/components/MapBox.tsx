@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useWeatherQuery } from '../../lib/weatherApi';
@@ -55,6 +55,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ initialOptions }) => {
       lat: defaultLocation.lat,
       lon: defaultLocation.lng,
     })
+    if (MAPBOX_ACCESS_KEY) {
+      const geocoder = new MapboxGeocoder({
+        accessToken: MAPBOX_ACCESS_KEY,
+        mapboxgl: mapboxgl,
+        marker: false, // Disable the default marker
+      });
+
+      mapboxMap.addControl(geocoder);
+
+      geocoderRef.current = geocoder;
+    }
+
+
     setMap(mapboxMap);
     if (marker) {
       marker.remove();
@@ -64,15 +77,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ initialOptions }) => {
     setMarker(newMarker);
 
 
-    const geocoder = new MapboxGeocoder({
-      accessToken: MAPBOX_ACCESS_KEY,
-      mapboxgl: mapboxgl,
-      marker: false, // Disable the default marker
-    });
-
-    mapboxMap.addControl(geocoder);
-
-    geocoderRef.current = geocoder;
 
     return () => {
       mapboxMap.remove();
